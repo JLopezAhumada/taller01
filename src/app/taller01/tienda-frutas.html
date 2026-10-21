@@ -1,0 +1,95 @@
+<section class="container">
+  <h2>Puesto de Frutas Don Efraín (Angular Signals)</h2>
+
+  @if (totalDinero() > 50000) {
+    <div class="alert alert-success">
+      🎉 <strong>Jornada de venta mayorista</strong> (Total mayor a $50.000)
+    </div>
+  }
+
+  @if (inventarioBajo()) {
+    <div class="alert alert-warning">
+      ⚠️ <strong>Atención:</strong> Hay productos con inventario bajo (entre 1 y 2 unidades).
+    </div>
+  }
+
+  <div class="resumen">
+    <p><strong>Total en dinero:</strong> ${{ totalDinero() | number: '1.0-0' }}</p>
+    <p><strong>Total de unidades:</strong> {{ totalUnidades() }} u.</p>
+    <p><strong>Productos agotados:</strong> {{ productosAgotados() }}</p>
+    @if (productoMasCaro(); as caro) {
+      <p>
+        <strong>Producto más caro:</strong>
+        {{ caro.nombre }} (${{ caro.precio | number: '1.0-0' }})
+      </p>
+    }
+  </div>
+
+  <h3>Inventario principal</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Fruta</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of frutas(); track item.id) {
+          <tr>
+            <td>{{ item.nombre }}</td>
+            <td>${{ item.precio | number: '1.0-0' }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.precio * item.cantidad | number: '1.0-0' }}</td>
+            <td class="actions">
+              <button type="button" (click)="venderFruta(item.id)" [disabled]="item.cantidad === 0">
+                Vender 1
+              </button>
+              <button
+                type="button"
+                class="btn-danger"
+                (click)="venderTodo(item.id)"
+                [disabled]="item.cantidad === 0"
+              >
+                Vender todo
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="empty">No hay frutas en el inventario.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Ranking por subtotal (mayor a menor)</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Fruta</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of frutasOrdenadasPorSubtotal(); track item.id) {
+          <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.precio * item.cantidad | number: '1.0-0' }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="3" class="empty">No hay frutas para ordenar.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

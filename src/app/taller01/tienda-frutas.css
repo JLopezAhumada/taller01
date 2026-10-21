@@ -1,0 +1,94 @@
+.container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2,
+h3 {
+  color: #2c3e50;
+}
+
+h3 {
+  margin: 1.5rem 0 0.75rem;
+}
+
+.alert {
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.resumen {
+  padding: 15px;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+}
+
+.resumen p {
+  margin: 0.25rem 0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+  background: #fff;
+}
+
+th,
+td {
+  border: 1px solid #e9ecef;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f8f9fa;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  border: 0;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+}
+
+button:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.empty {
+  padding: 1.5rem;
+  color: #6c757d;
+  text-align: center;
+}

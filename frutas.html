@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Puesto de Frutas Don Efraín - Versión Tradicional</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 25px;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+      h1 {
+        color: #2c3e50;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        background: #fff;
+        box-shadow: 0 2px 5px rgb(0 0 0 / 5%);
+      }
+      th,
+      td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+      }
+      th {
+        background-color: #e9ecef;
+      }
+      .alert {
+        display: none;
+        margin-bottom: 15px;
+        padding: 12px;
+        border: 1px solid #c3e6cb;
+        border-radius: 4px;
+        background-color: #d4edda;
+        color: #155724;
+        font-weight: bold;
+      }
+      .totales {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background: #fff;
+        font-size: 1.1em;
+      }
+      button {
+        padding: 6px 12px;
+        border: 0;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Puesto de Frutas Don Efraín (Versión Tradicional)</h1>
+
+    <div id="mensajeMayorista" class="alert">
+      🎉 Jornada de venta mayorista (Total mayor a $50.000)
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Fruta</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaCuerpo"></tbody>
+    </table>
+
+    <div class="totales">
+      <p><strong>Total en dinero:</strong> $<span id="totalDinero">0</span></p>
+      <p><strong>Total de unidades:</strong> <span id="totalUnidades">0</span> u.</p>
+    </div>
+
+    <script>
+      const frutas = [
+        { id: 1, nombre: 'Mango', precio: 1800, cantidad: 12 },
+        { id: 2, nombre: 'Guayaba', precio: 1200, cantidad: 8 },
+        { id: 3, nombre: 'Patilla', precio: 6500, cantidad: 2 },
+        { id: 4, nombre: 'Maracuyá', precio: 3400, cantidad: 5 },
+        { id: 5, nombre: 'Níspero', precio: 2900, cantidad: 4 },
+      ];
+
+      function renderizar() {
+        const tbody = document.getElementById('tablaCuerpo');
+        tbody.innerHTML = '';
+
+        let totalDinero = 0;
+        let totalUnidades = 0;
+
+        frutas.forEach((fruta) => {
+          const subtotal = fruta.precio * fruta.cantidad;
+          totalDinero += subtotal;
+          totalUnidades += fruta.cantidad;
+
+          const fila = document.createElement('tr');
+          fila.innerHTML = `
+            <td>${fruta.nombre}</td>
+            <td>$${fruta.precio.toLocaleString('es-CO')}</td>
+            <td>${fruta.cantidad}</td>
+            <td>$${subtotal.toLocaleString('es-CO')}</td>
+            <td>
+              <button onclick="vender(${fruta.id})" ${fruta.cantidad === 0 ? 'disabled' : ''}>
+                Vender 1
+              </button>
+            </td>
+          `;
+          tbody.appendChild(fila);
+        });
+
+        document.getElementById('totalDinero').textContent = totalDinero.toLocaleString('es-CO');
+        document.getElementById('totalUnidades').textContent = totalUnidades;
+        document.getElementById('mensajeMayorista').style.display =
+          totalDinero > 50000 ? 'block' : 'none';
+      }
+
+      function vender(id) {
+        const fruta = frutas.find((item) => item.id === id);
+        if (fruta && fruta.cantidad > 0) {
+          fruta.cantidad--;
+          renderizar();
+        }
+      }
+
+      renderizar();
+    </script>
+  </body>
+</html>
